@@ -41,7 +41,7 @@ frontend betascribbles.tech-http-frontend
 
 
 frontend  beta-scribbles.tech-https-frontend
-	bind *:443 ssl crt /etc/ssl/beta-scribbles.tech.pem
+	bind *:301 ssl crt /etc/ssl/beta-scribbles.tech.pem
 	http-request set-header X-Forwarded-Proto https
         default_backend beta-scribbles.tech-backend
 
