@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+frontend http
+    bind *:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend https_redirect
+
+frontend https
+    bind *:443 ssl crt /etc/ssl/certs/mycert.pem
+    option http-server-close
+    default_backend web_servers
+
+backend https_redirect
+    redirect scheme https code 301 if !{ ssl_fc }
+    server https_redirect_server 127.0.0.1:80
+
+backend web_servers
+    server web1 192.168.0.1:80 check
+    server web2 192.168.0.2:80 check
+
