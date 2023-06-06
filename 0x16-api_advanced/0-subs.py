@@ -8,10 +8,12 @@ import requests
 def number_of_subscribers(subreddit):
     headers = {"User-Agent": "Subreddit Subscriber Counter\
                (by /u/YourUsername)"}
+    params = {"limit": 10}
 
     try:
         url = f"https://www.reddit.com/r/{subreddit}/about.json"
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, params=params,
+                                allow_redirects=False)
 
         if response.status_code == 200:
             data = response.json()
