@@ -6,10 +6,9 @@ import requests
 
 
 def recurse(subreddit, hot_list=[], after=""):
-    req = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit),
-                            headers={"User-Agent": "Custom"},
-                            params={after: "after"},
-                            )
+    req = requests.get("https://www.reddit.com/r/{}/hot.json".format
+                       (subreddit), headers={"User-Agent": "Custom"},
+                       params={after: "after"})
     if req.status_code == 200:
         for get_data in req.json().get("data").get("children"):
             dat = get_data.get("data")
@@ -22,4 +21,4 @@ def recurse(subreddit, hot_list=[], after=""):
         else:
             return recurse(subreddit, hot_list, after)
     else:
-        return None 
+        return None
