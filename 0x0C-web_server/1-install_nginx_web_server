@@ -1,8 +1,29 @@
 #!/usr/bin/env bash
 # Installs, configures, and starts the server
 # Imanol Asolo
+
+# Update package information and install Nginx
 sudo apt-get update
 sudo apt-get install -y nginx
-sudo chown -R ubuntu /var/www
-echo "Hello World" > /var/www/html/index.nginx-debian.html
-sudo service nginx start
+
+# Create a basic HTML page with "Hello World!"
+echo "<html><body>Hello World!</body></html>" | sudo tee /var/www/html/index.html
+
+# Configure Nginx to listen on port 80 and serve the custom HTML page
+sudo tee /etc/nginx/sites-available/default <<EOL
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+}
+EOL
+
+# Restart Nginx
+sudo service nginx restart
+
+echo "Nginx installation and configuration completed."
+
